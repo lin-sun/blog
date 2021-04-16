@@ -84,17 +84,19 @@
 
 
 
-<meta name="description" content="12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758function myPromise(fn) &amp;#123;    _this = this    this.state = &apos;pending&apos; //promise状态    this.s">
+<meta name="description" content="MVVM 架构的优点 低耦合。视图（View）可以独立于 Model 变化和修改，一个 ViewModel 可以绑定到不同的 “View” 上，当 View 变化的时候 Model 可以不变，当 Model 变化的时候 View 也可以不变。 可重用性。你可以把一些视图逻辑放在一个 ViewModel 里面，让很多 View 重用这段视图逻辑。 独立开发。开发人员可以专注于业务逻辑和数据的开发（V">
 <meta property="og:type" content="article">
-<meta property="og:title" content="手写一个promise">
-<meta property="og:url" content="http://yoursite.com/2020/01/07/手写题/Promise/index.html">
+<meta property="og:title" content="Vue 的数据双向绑定">
+<meta property="og:url" content="http://yoursite.com/2021/04/16/原理/Vue 的数据双向绑定/index.html">
 <meta property="og:site_name" content="Lin&#39;s Note">
-<meta property="og:description" content="12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758function myPromise(fn) &amp;#123;    _this = this    this.state = &apos;pending&apos; //promise状态    this.s">
+<meta property="og:description" content="MVVM 架构的优点 低耦合。视图（View）可以独立于 Model 变化和修改，一个 ViewModel 可以绑定到不同的 “View” 上，当 View 变化的时候 Model 可以不变，当 Model 变化的时候 View 也可以不变。 可重用性。你可以把一些视图逻辑放在一个 ViewModel 里面，让很多 View 重用这段视图逻辑。 独立开发。开发人员可以专注于业务逻辑和数据的开发（V">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2021-04-15T08:04:34.855Z">
+<meta property="og:image" content="http://yoursite.com/blog/images/20210416143639.png">
+<meta property="og:updated_time" content="2021-04-16T06:44:27.108Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="手写一个promise">
-<meta name="twitter:description" content="12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758function myPromise(fn) &amp;#123;    _this = this    this.state = &apos;pending&apos; //promise状态    this.s">
+<meta name="twitter:title" content="Vue 的数据双向绑定">
+<meta name="twitter:description" content="MVVM 架构的优点 低耦合。视图（View）可以独立于 Model 变化和修改，一个 ViewModel 可以绑定到不同的 “View” 上，当 View 变化的时候 Model 可以不变，当 Model 变化的时候 View 也可以不变。 可重用性。你可以把一些视图逻辑放在一个 ViewModel 里面，让很多 View 重用这段视图逻辑。 独立开发。开发人员可以专注于业务逻辑和数据的开发（V">
+<meta name="twitter:image" content="http://yoursite.com/blog/images/20210416143639.png">
 
 
 
@@ -115,9 +117,9 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2020/01/07/手写题/Promise/"/>
+  <link rel="canonical" href="http://yoursite.com/2021/04/16/原理/Vue 的数据双向绑定/"/>
 
-  <title> 手写一个promise | Lin's Note </title>
+  <title> Vue 的数据双向绑定 | Lin's Note </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -231,7 +233,7 @@
             
             
               
-                手写一个promise
+                Vue 的数据双向绑定
               
             
           </h1>
@@ -243,8 +245,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2020-01-07T00:00:00+08:00" content="2020-01-07">
-              2020-01-07
+            <time itemprop="dateCreated" datetime="2021-04-16T00:00:00+08:00" content="2021-04-16">
+              2021-04-16
             </time>
           </span>
 
@@ -257,8 +259,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/blog/categories/手写题/" itemprop="url" rel="index">
-                    <span itemprop="name">手写题</span>
+                  <a href="/blog/categories/javascript进阶/" itemprop="url" rel="index">
+                    <span itemprop="name">javascript进阶</span>
                   </a>
                 </span>
 
@@ -290,7 +292,24 @@
       
 
       
-        <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">myPromise</span>(<span class="params">fn</span>) </span>&#123;</div><div class="line">    _this = <span class="keyword">this</span></div><div class="line">    <span class="keyword">this</span>.state = <span class="string">'pending'</span> <span class="comment">//promise状态</span></div><div class="line">    <span class="keyword">this</span>.success = <span class="literal">undefined</span> <span class="comment">//成功信息</span></div><div class="line">    <span class="keyword">this</span>.error = <span class="literal">undefined</span>  <span class="comment">//失败信息</span></div><div class="line">    <span class="keyword">this</span>.onFulfilledFunc = [] <span class="comment">//保存成功回调</span></div><div class="line">    <span class="keyword">this</span>.onRejectedFunc = []  <span class="comment">//保存失败回调</span></div><div class="line">    fn(resolve, reject)   <span class="comment">//立即执行参数函数</span></div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">resolve</span>(<span class="params">value</span>)</span>&#123;</div><div class="line">        <span class="comment">//两个==="pending"，保证了状态的改变是不可逆的</span></div><div class="line">        <span class="keyword">if</span>(_this.state === <span class="string">'pending'</span>)&#123;</div><div class="line">            <span class="comment">// 依次执行成功回调函数</span></div><div class="line">            _this.onFulfilledFunc.forEach(<span class="function"><span class="params">fn</span> =&gt;</span> fn(value))</div><div class="line">            _this.state = <span class="string">'resolved'</span></div><div class="line">            _this.success = value</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">reject</span>(<span class="params">value</span>)</span>&#123;</div><div class="line">        <span class="comment">//两个==="pending"，保证了状态的改变是不可逆的</span></div><div class="line">        <span class="keyword">if</span>(_this.state === <span class="string">'pending'</span>)&#123;</div><div class="line">            <span class="comment">//依次执行失败回调函数</span></div><div class="line">            _this.onRejectedFunc.forEach(<span class="function"><span class="params">fn</span> =&gt;</span> fn(value))</div><div class="line">            _this.state = <span class="string">'rejected'</span></div><div class="line">            _this.error = value</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"><span class="comment">//同时，需要在 myPromise的原型上定义链式调用的 then方法：</span></div><div class="line">myPromise.prototype.then = <span class="function"><span class="keyword">function</span>(<span class="params">onFulfilled, onRejected</span>)</span>&#123;</div><div class="line">    <span class="comment">///等待态，此时异步代码还没有走完</span></div><div class="line">    <span class="keyword">if</span>(<span class="keyword">this</span>.state === <span class="string">'pending'</span>)&#123;</div><div class="line">        <span class="keyword">if</span>(<span class="keyword">typeof</span> onFulfilled === <span class="string">'function'</span>)&#123;</div><div class="line">            <span class="keyword">this</span>.onFulfilledFunc.push(onFulfilled) <span class="comment">//保存回调</span></div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span>(<span class="keyword">typeof</span> onRejected === <span class="string">'function'</span>)&#123;</div><div class="line">            <span class="keyword">this</span>.onRejectedFunc.push(onRejected) <span class="comment">//保存回调</span></div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="comment">//成功态，执行成功回调函数</span></div><div class="line">    <span class="keyword">if</span>(<span class="keyword">this</span>.state === <span class="string">'resolved'</span>)&#123;</div><div class="line">        <span class="keyword">if</span>(<span class="keyword">typeof</span> onFulfilled === <span class="string">'function'</span>)&#123;</div><div class="line">            onFulfilled(<span class="keyword">this</span>.success)</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="comment">//失败态， 执行失败回调函数</span></div><div class="line">    <span class="keyword">if</span>(<span class="keyword">this</span>.state === <span class="string">'rejected'</span>)&#123;</div><div class="line">        <span class="keyword">if</span>(<span class="keyword">typeof</span> onFulfilled === <span class="string">'function'</span>)&#123;</div><div class="line">            onRejected(<span class="keyword">this</span>.error)</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">new</span> myPromise(<span class="function"><span class="keyword">function</span>(<span class="params">resolve, reject</span>)</span>&#123;</div><div class="line">    resolve(<span class="number">1</span>)</div><div class="line">&#125;).then(<span class="function"><span class="params">res</span> =&gt;</span> &#123;</div><div class="line">    <span class="built_in">console</span>.log(res)</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+        <h2 id="MVVM-架构的优点"><a href="#MVVM-架构的优点" class="headerlink" title="MVVM 架构的优点"></a>MVVM 架构的优点</h2><ul>
+<li><code>低耦合</code>。视图（View）可以独立于 Model 变化和修改，一个 ViewModel 可以绑定到不同的 “View” 上，当 View 变化的时候 Model 可以不变，当 Model 变化的时候 View 也可以不变。</li>
+<li><code>可重用性</code>。你可以把一些视图逻辑放在一个 ViewModel 里面，让很多 View 重用这段视图逻辑。</li>
+<li><code>独立开发</code>。开发人员可以专注于业务逻辑和数据的开发（ViewModel），设计人员可以专注于页面设计。</li>
+<li><code>方便测试</code>。界面素来是比较难于测试的，开发中大部分 Bug 来至于逻辑处理，由于 ViewModel 分离了许多逻辑，可以对 ViewModel 构造单元测试。<a id="more"></a>
+Vue专注于MVVM实现了数据的双向绑定，双向数据绑定把 View 层和 Model 层连接了起来，而View 和 Model 之间的同步工作完全是自动的，无需人为干涉，因此开发者<code>只需关注业务逻辑</code>，<code>不需要手动操作DOM</code>， 不需要关注<code>数据状态的同步问题</code>，复杂的数据状态维护完全由 MVVM 来统一管理。大大方便了数据状态的维护与管理</li>
+</ul>
+<h2 id="Vue-对于-MVVM-架构的实践"><a href="#Vue-对于-MVVM-架构的实践" class="headerlink" title="Vue 对于 MVVM 架构的实践"></a>Vue 对于 MVVM 架构的实践</h2><p>上面我们了解了MVVM的优点，那么下面就让我们来分析一下Vue.js对于MVVM的实践，数据双向绑定的原理实现吧，先来看下面这张图<br><img src="/blog/images/20210416143639.png" alt=""><br>Vue.js使用 <code>Object.defineProperty</code> 中的<code>getter</code> 和 <code>setter</code>来对对象中的属性进行操作，结合了<code>发布订阅模式</code>来实现数据绑定。<br>简单分析一下流程：一个 JS 对象作为数据传给Vue 实例时，Vue 会<code>遍历它的属性</code>，并使用Object.defineProperty 将它们转化为 <code>getter/setter</code>，Vue在内部会对它们监听，在属性被访问或修改时及时进行<code>通知</code></p>
+<p>在分析Vue 的双向数据绑定之前，我们先了解上图中各个位置的作用</p>
+<ul>
+<li><code>Observer</code> ：数据监听器，对Vue的数据对象中所有属性进行监听，一旦属性发生改变，将最新值传给watcher（订阅者）</li>
+<li><code>Compile</code>  ：指令编译器，对每个DOM元素节点指令进行扫描和解析，根据指令模板替换数据，以及绑定相应的更新函数</li>
+<li><code>Dep</code> ：消息订阅器，内部有一个维护的数组用来收集订阅者（Watcher），如果数据发生变动，则触发notify 函数，然后调用wacher订阅者的 update 方法</li>
+<li><code>Watcher</code>  ：订阅者，连接observer 与compile，获取属性变化的通知，并将数据及时更新到视图当中</li>
+</ul>
+<p>让我们一步一步来捋Vue中数据双向绑定的步骤，流程大致可以分为两个阶段<br>一个是<code>初始化阶段</code>，一个是<code>数据更新阶段</code></p>
+<h4 id="初始化阶段"><a href="#初始化阶段" class="headerlink" title="初始化阶段"></a>初始化阶段</h4><p>执行new Vue() ，Vue进入初始化阶段 ,此时开始两个操作，一个是<code>数据监听</code>，一个是<code>页面渲染</code>。<br>一方面 Vue 会遍历 data 选项中的属性，并用 <code>Object.defineProperty</code> 将它们转为 <code>getter/setter</code>，实现数据变化<code>监听</code>功能。<br>另一方面，指令编译器Compile 对元素节点的指令进行扫描和解析，<code>初始化视图</code>，并<code>订阅 Watcher</code> 来更新视图。此时wacher 会将自己添加到消息订阅器中(Dep)，初始化完毕。</p>
+<h4 id="数据更新阶段"><a href="#数据更新阶段" class="headerlink" title="数据更新阶段"></a>数据更新阶段</h4><p>当data数据中有属性发生变化时，Observer 中的 setter 方法被触发，setter 会立即调用<code>Dep.notify()</code>，随后Dep 开始遍历所有的订阅者，对订阅者Watcher<code>发送通知</code>，并且会调用订阅者的 <code>update 方法</code>，最后，订阅者Watcher收到Dep的数据更新的通知后，也会对视图进行相应的<code>更新</code>。<br>至此，数据的双向绑定完成</p>
 
       
     </div>
@@ -316,17 +335,13 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/blog/2019/03/28/webpack/webpack-corss-env/" rel="next" title="webpack设置环境变量来区分生产和测试环境">
-                <i class="fa fa-chevron-left"></i> webpack设置环境变量来区分生产和测试环境
+              <a href="/blog/2021/04/15/原理/事件循环机制/" rel="next" title="事件循环机制">
+                <i class="fa fa-chevron-left"></i> 事件循环机制
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/blog/2020/01/07/原理/原型链/" rel="prev" title="prototype, __proto__, constructor">
-                prototype, __proto__, constructor <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -456,7 +471,7 @@
               
             
             
-              <p class="post-toc-empty">此文章未包含目录</p>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#MVVM-架构的优点"><span class="nav-number">1.</span> <span class="nav-text">MVVM 架构的优点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Vue-对于-MVVM-架构的实践"><span class="nav-number">2.</span> <span class="nav-text">Vue 对于 MVVM 架构的实践</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#初始化阶段"><span class="nav-number">2.0.1.</span> <span class="nav-text">初始化阶段</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#数据更新阶段"><span class="nav-number">2.0.2.</span> <span class="nav-text">数据更新阶段</span></a></li></ol></li></ol></li></ol></div>
             
           </div>
         </section>
